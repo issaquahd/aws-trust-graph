@@ -2,6 +2,8 @@
 
 See who can assume which IAM role in an account, as a Mermaid graph, with risky trust policies flagged and every account ID redacted.
 
+**Status:** unit-tested offline against synthetic IAM fixtures. Not yet run against a live AWS account; this line changes when it has been.
+
 ## What it does
 
 `trust_graph.py` reads the JSON from `aws iam list-roles --output json`, and optionally a folder of `aws iam get-role` outputs. It parses each role's trust policy, whether returned as an object or URL-encoded, and draws **principal --> role** edges for:
