@@ -1,0 +1,41 @@
+flowchart LR
+  classDef role fill:#eef4ff,stroke:#3b6fd8,color:#111
+  classDef risky fill:#ffecec,stroke:#d33,color:#111
+  classDef principal fill:#f6f6f6,stroke:#888,color:#111
+  classDef wildcard fill:#ffd6d6,stroke:#b00,color:#111
+  r1["role: break-glass"]:::role
+  r2["role: ecs-task"]:::role
+  r3["role: github-deployer"]:::role
+  r4["role: lambda-exec"]:::role
+  r5["role: oidc-any-repo"]:::role
+  r6["role: partner-readonly"]:::role
+  r7["role: same-account-admin"]:::role
+  r8["role: shared-deploy"]:::role
+  r9["role: sso-admins"]:::role
+  r10["role: vendor-audit"]:::role
+  p1["ANYONE: *"]:::wildcard
+  p2["Service: ecs-tasks.amazonaws.com"]:::principal
+  p3["Federated: arn:aws:iam::#lt;account-id#gt;:oidc-provider/token.actions.githubusercontent.com"]:::principal
+  p4["Service: lambda.amazonaws.com"]:::principal
+  p5["AWS: arn:aws:iam::#lt;account-id#gt;:root [external account #1]"]:::principal
+  p6["AWS: arn:aws:iam::#lt;account-id#gt;:role/admin [this account]"]:::principal
+  p7["AWS: arn:aws:iam::#lt;account-id#gt;:role/deploy [external account #2]"]:::principal
+  p8["AWS: arn:aws:iam::#lt;account-id#gt;:user/ci-bot [external account #2]"]:::principal
+  p9["Federated: arn:aws:iam::#lt;account-id#gt;:saml-provider/ExampleIdP"]:::principal
+  p10["AWS: #lt;account-id#gt; [external account #3]"]:::principal
+  p1 -->|"FLAG: wildcard principal (conditions present: review them)"| r1
+  p2 -->|"AssumeRole"| r2
+  p3 -->|"AssumeRoleWithWebIdentity"| r3
+  p4 -->|"AssumeRole"| r4
+  p3 -->|"FLAG: OIDC trust without conditions (any repo/subject)"| r5
+  p5 -->|"AssumeRole"| r6
+  p6 -->|"AssumeRole, TagSession"| r7
+  p7 -->|"FLAG: cross-account trust without sts:ExternalId"| r8
+  p8 -->|"FLAG: cross-account trust without sts:ExternalId"| r8
+  p9 -->|"AssumeRoleWithSAML, TagSession"| r9
+  p10 -->|"FLAG: cross-account trust without sts:ExternalId"| r10
+  class r1 risky
+  class r5 risky
+  class r8 risky
+  class r10 risky
+  linkStyle 0,4,7,8,10 stroke:#d33,stroke-width:2px

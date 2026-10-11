@@ -1,0 +1,13 @@
+flowchart LR
+  cs["AWS CloudShell<br/>admin IAM user"]
+  iam["IAM API<br/>list-roles / get-role<br/>(read-only)"]
+  raw["out/list-roles.json<br/>out/get-role/*.json<br/>(raw, gitignored)"]
+  tg["trust_graph.py<br/>parse trust policies<br/>classify principals<br/>flag risky trust<br/>redact account IDs"]
+  mmd["trust-graph.mmd<br/>principals to roles"]
+  md["findings.md<br/>wildcards, cross-account<br/>without ExternalId"]
+
+  cs -- "collect.sh" --> iam
+  iam --> raw
+  raw --> tg
+  tg --> mmd
+  tg --> md

@@ -1,0 +1,255 @@
+{
+  "Roles": [
+    {
+      "Path": "/",
+      "RoleName": "lambda-exec",
+      "RoleId": "AROAEXAMPLELAMBDAEXEC",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/lambda-exec",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "github-deployer",
+      "RoleId": "AROAEXAMPLEGITHUBDEPL",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/github-deployer",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::ACCOUNT_SELF:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                "token.actions.githubusercontent.com:sub": "repo:example-org/example-repo:ref:refs/heads/main"
+              }
+            }
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "oidc-any-repo",
+      "RoleId": "AROAEXAMPLEOIDCANYREP",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/oidc-any-repo",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::ACCOUNT_SELF:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity"
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "partner-readonly",
+      "RoleId": "AROAEXAMPLEPARTNERREA",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/partner-readonly",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::ACCOUNT_PARTNER:root"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "sts:ExternalId": "example-external-id"
+              }
+            }
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "vendor-audit",
+      "RoleId": "AROAEXAMPLEVENDORAUDI",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/vendor-audit",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "ACCOUNT_VENDOR"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "break-glass",
+      "RoleId": "AROAEXAMPLEBREAKGLASS",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/break-glass",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "*"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "StringEquals": {
+                "aws:PrincipalOrgID": "o-exampleorg1"
+              }
+            }
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "same-account-admin",
+      "RoleId": "AROAEXAMPLESAMEACCOUN",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/same-account-admin",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::ACCOUNT_SELF:role/admin"
+            },
+            "Action": [
+              "sts:AssumeRole",
+              "sts:TagSession"
+            ]
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "ecs-task",
+      "RoleId": "AROAEXAMPLEECSTASK",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/ecs-task",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": "%7B%22Version%22%3A%20%222012-10-17%22%2C%20%22Statement%22%3A%20%5B%7B%22Effect%22%3A%20%22Allow%22%2C%20%22Principal%22%3A%20%7B%22Service%22%3A%20%5B%22ecs-tasks.amazonaws.com%22%5D%7D%2C%20%22Action%22%3A%20%22sts%3AAssumeRole%22%7D%5D%7D",
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/aws-service-role/support.amazonaws.com/",
+      "RoleName": "AWSServiceRoleForSupport",
+      "RoleId": "AROAEXAMPLEAWSSERVICE",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/aws-service-role/support.amazonaws.com/AWSServiceRoleForSupport",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "support.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "sso-admins",
+      "RoleId": "AROAEXAMPLESSOADMINS",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/sso-admins",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::ACCOUNT_SELF:saml-provider/ExampleIdP"
+            },
+            "Action": [
+              "sts:AssumeRoleWithSAML",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "SAML:aud": "https://signin.aws.amazon.com/saml"
+              }
+            }
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    },
+    {
+      "Path": "/",
+      "RoleName": "shared-deploy",
+      "RoleId": "AROAEXAMPLESHAREDDEPL",
+      "Arn": "arn:aws:iam::ACCOUNT_SELF:role/shared-deploy",
+      "CreateDate": "2026-01-15T10:00:00+00:00",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": [
+                "arn:aws:iam::ACCOUNT_THIRD:role/deploy",
+                "arn:aws:iam::ACCOUNT_THIRD:user/ci-bot"
+              ]
+            },
+            "Action": "sts:AssumeRole"
+          },
+          {
+            "Effect": "Deny",
+            "Principal": {
+              "AWS": "*"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+              "Bool": {
+                "aws:SecureTransport": "false"
+              }
+            }
+          }
+        ]
+      },
+      "MaxSessionDuration": 3600
+    }
+  ]
+}
